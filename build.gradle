@@ -42,18 +42,24 @@ subprojects {
 
 
     dependencies {
+        //testing
         testImplementation platform('org.junit:junit-bom:5.10.0')
         testImplementation 'org.junit.jupiter:junit-jupiter'
 
         implementation 'javax.el:javax.el-api:3.0.0'
-
+        //web 
         implementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
+
+        //security
         implementation 'org.springframework.boot:spring-boot-starter-security'
         implementation "org.springframework.security:spring-security-core:${springSecurity}"
+        implementation 'io.jsonwebtoken:jjwt:0.12.6'
         //thymeleaf
         implementation 'org.thymeleaf:thymeleaf-spring6'
 
 
+
+        //hibernate
         implementation 'org.hibernate:hibernate-validator:6.0.22.Final'
         implementation 'org.hibernate:hibernate-core:5.6.15.Final'
         implementation 'org.hibernate:hibernate-envers:5.6.15.Final'

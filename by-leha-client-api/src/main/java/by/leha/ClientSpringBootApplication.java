@@ -1,5 +1,6 @@
 package by.leha;
 
+import by.leha.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,5 +12,7 @@ public class ClientSpringBootApplication {
         log.info("Starting ClientSpringBootApplication");
         SpringApplication app = new SpringApplication(ClientSpringBootApplication.class);
         app.run(args);
+
+
     }
 }
