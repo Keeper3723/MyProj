@@ -16,9 +16,11 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation project(":by-leha-other")
+    implementation project(":by-leha-database")
 
 }
 
 test {
     useJUnitPlatform()
 }
+

@@ -57,8 +57,6 @@ subprojects {
         //thymeleaf
         implementation 'org.thymeleaf:thymeleaf-spring6'
 
-
-
         //hibernate
 
         implementation platform ("org.hibernate.orm:hibernate-platform:6.6.1.Final")
