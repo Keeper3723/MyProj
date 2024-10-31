@@ -1,8 +1,6 @@
 package by.leha;
 
 
-import by.leha.config.security.WebSecurity;
-import by.leha.services.ClientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 
-@SpringBootApplication(exclude = {  SecurityAutoConfiguration.class})
+@SpringBootApplication
 @Slf4j
 public class ClientSpringBootApplication {
 

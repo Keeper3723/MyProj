@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Форма бронирования</h2>
+<form th:action="/api1/hotels" th:method="POST" th:object ="${person}">
+    <label for="name">Ваше имя:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="email">Электронная почта:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="checkin">Дата заезда:</label><br>
+    <input type="date" id="checkin" name="checkin" required><br><br>
+
+    <label for="checkout">Дата выезда:</label><br>
+    <input type="date" id="checkout" name="checkout" required><br><br>
+
+    <label for="room-type">Тип номера:</label><br>
+    <select id="room-type" name="room-type">
+        <option value="economy">Эконом</option>
+        <option value="standard">Стандарт</option>
+        <option value="lux">Люкс</option>
+    </select><br><br>
+
+    <input type="submit" value="Забронировать">
+</form>
+</body>
+</html>

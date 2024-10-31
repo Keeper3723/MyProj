@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/by-leha-client-api" />
             <option value="$PROJECT_DIR$/by-leha-database" />
             <option value="$PROJECT_DIR$/by-leha-other" />
+            <option value="$PROJECT_DIR$/by-leha-worker-api" />
           </set>
         </option>
       </GradleProjectSettings>

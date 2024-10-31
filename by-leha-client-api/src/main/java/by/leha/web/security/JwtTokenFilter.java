@@ -1,4 +1,4 @@
 package by.leha.web.security;
 
-public class JwtCore {
+public class JwtTokenFilter {
 }

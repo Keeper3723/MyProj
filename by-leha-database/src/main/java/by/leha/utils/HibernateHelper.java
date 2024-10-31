@@ -1,8 +1,5 @@
 package by.leha.utils;
 
-
-import by.leha.entity.Client;
-import by.leha.services.ClientServiceImpl;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Bean;

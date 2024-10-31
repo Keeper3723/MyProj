@@ -5,6 +5,28 @@
     <title>This is page of hotels</title>
 </head>
 <body>
+<section id="rooms">
+    <h2>Наши номера</h2>
+    <div class="room">
+        <h3>Экономный</h3>
+        <p>Номер с одной кроватью, идеально подходит для того чтобы хорошо отдохнуть после тяжелого дня</p>
+        <p>Цена: 2500 руб./ночь</p>
+    </div>
+    <div class="room">
+        <h3>Стандартный</h3>
+        <p>Уютный номер с одной двуспальной кроватью. Идеально подходит для пар.</p>
+        <p>Цена: 5000 руб./ночь</p>
+    </div>
+    <div class="room">
+        <h3>Люкс</h3>
+        <p>Просторный номер с отдельной гостиной и ванной комнатой. Подходит для семей.</p>
+        <p>Цена: 10000 руб./ночь</p>
+    </div>
+</section>
+
+<form method="get" th:action="@{/persons/new}">
+    <input type="submit" value="Create new person">
+</form>
 
 </body>
 </html>

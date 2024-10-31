@@ -1,25 +1,30 @@
-package by.leha.entity.entity_utils;
+package by.leha.web.security;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-public class UserDetailsImpl implements UserDetails {
+@Data
+public class JwtEntity implements UserDetails, Serializable {
+
+    private Long id;
+    private final String username;
+    private final String name;
+    private final String password;
+    private final Collection<? extends GrantedAuthority> authorities;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return "";
-    }
-
-    @Override
-    public String getUsername() {
-        return "";
+        return password;
     }
 
     @Override
@@ -40,5 +45,10 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 }
