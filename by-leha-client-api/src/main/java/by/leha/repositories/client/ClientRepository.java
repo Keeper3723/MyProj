@@ -1,9 +1,9 @@
 package by.leha.repositories.client;
 
-import by.leha.entity.Client;
+import by.leha.entity.client.Client;
+import by.leha.entity.login.Login;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ClientRepository {
     List<Client> findAllClients();
@@ -11,6 +11,7 @@ public interface ClientRepository {
     boolean insertClient(Client client);
     boolean updateClientById(Long id,Client client);
     boolean deleteClientById(Long id);
+    boolean addLoginToClient(Long login, Client client);
 
 
 

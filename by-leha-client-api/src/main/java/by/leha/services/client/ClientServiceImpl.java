@@ -1,6 +1,7 @@
-package by.leha.services;
+package by.leha.services.client;
 
-import by.leha.entity.Client;
+import by.leha.entity.client.Client;
+import by.leha.entity.login.Login;
 import by.leha.repositories.client.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,10 @@ public class ClientServiceImpl implements ClientService {
 
 
 
+    }
+
+    @Override
+    public boolean addLoginToClient(Client client, Long loginId) {
+        return clientRepository.addLoginToClient(loginId,client);
     }
 }

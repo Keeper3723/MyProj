@@ -1,5 +1,7 @@
-package by.leha.entity;
+package by.leha.entity.client;
 
+import by.leha.entity.entity_utils.Sex;
+import by.leha.entity.login.Login;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +15,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Table(name = "clients")
 public class Client {
-    //todo переопрделить hashcode и equals правильно
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
@@ -24,13 +26,17 @@ public class Client {
     @Column(name = "birth_date")
     private Date birthDate;
     @Column(name = "sex")
-    private String sex;
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
     @Column(name = "phone_number")
     private String phoneNumber;
     @Column(name = "passport_serial_number")
     private String passportSerialNumber;
     @Column(name = "email")
     private String email;
+    @JoinColumn(name = "login_id",referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Login login;
 
 
 }

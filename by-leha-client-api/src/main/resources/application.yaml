@@ -1,0 +1,37 @@
+
+spring:
+  security:
+    user:
+      name: Leha_user
+      password: password
+      roles:
+        - USER
+  datasource:
+    url: jdbc:postgresql://194.164.33.111:5432/course_project_db
+    username:
+    password:
+    hikari:
+      keepalive-time: 30000
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+logging:
+  level:
+    root: info
+
+rest:
+  client:
+    url: http://localhost:8080/api1/clientst
+  login:
+    url: http://localhost:8080/api1/loginst
+
+
+security:
+  jwt:
+    secret: ZGZibmpuZmo7IG52ZjtkdidtZHNvaXZrbGV1aGhnZWdpaHVqZidvJ2ZvZidrZnZkdm5uenZjY3h6dnlydXdlbEhYVkM=
+    audiance: 360000
+    refresh: 2592000000
+
+

@@ -1,21 +1,21 @@
 package by.leha.config.security;
 
-import by.leha.web.security.JwtTokenFilter;
+import by.leha.services.login.LoginService;
+import by.leha.web.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
-import org.springframework.security.config.annotation.SecurityBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,17 +26,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration
+
+
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
-public class WebSecurity implements WebSecurityConfigurer {
+public class WebSecurity  {
 
+    private final LoginService loginService;
     private final ApplicationContext applicationContext;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
-    public PasswordEncoder passwordEncoder(RestTemplateAutoConfiguration restTemplateAutoConfiguration) {
+    public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
     }
 
@@ -45,31 +48,41 @@ public class WebSecurity implements WebSecurityConfigurer {
         return configuration.getAuthenticationManager();
     }
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-           http
+    public DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(loginService);
+    return daoAuthenticationProvider;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenProvider jwtTokenProvider) throws Exception {
+        return      http
+                .httpBasic(Customizer.withDefaults())
+
               .csrf(AbstractHttpConfigurer::disable)
               .cors(AbstractHttpConfigurer::disable)
-              .httpBasic(AbstractHttpConfigurer::disable)
+
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/api1/**","/auth/**","/").permitAll()
+                        .requestMatchers("/**").hasAuthority("USER")
+                        .anyRequest().authenticated()
+
+                )
               .sessionManagement(managment -> managment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
               .exceptionHandling(handler -> handler.authenticationEntryPoint((request, response, authException) -> {
+
                   response.setStatus(HttpStatus.UNAUTHORIZED.value());
                   response.getWriter().write("Unauthorized");
-              }).accessDeniedHandler((request, response, accessDeniedException) ->  {
+              }
+              ).accessDeniedHandler((request, response, accessDeniedException) ->  {
                   response.setStatus(HttpStatus.FORBIDDEN.value());
                   response.getWriter().write("Unauthorized");
               }))
-              .authorizeHttpRequests(requests -> requests.requestMatchers("/api1/**").permitAll()
-                      .anyRequest().authenticated()
-              )
+
+
               .anonymous(AbstractHttpConfigurer::disable)
-              .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-return http.build();
-
-
-
-
-
-
+                .build();
     }
 
 
@@ -98,14 +111,6 @@ return new DefaultAuthenticationEventPublisher(delegate);
     }
 
 
-    @Override
-    public void init(SecurityBuilder builder) throws Exception {
 
-    }
-
-    @Override
-    public void configure(SecurityBuilder builder) throws Exception {
-
-    }
 }
 

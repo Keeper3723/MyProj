@@ -1,14 +1,19 @@
 package by.leha.config;
 
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
+
+import java.time.Duration;
+import java.time.temporal.TemporalUnit;
 
 @Configuration
 
@@ -37,5 +42,16 @@ public class SpringWebConfig implements WebMvcConfigurer {
         registry.viewResolver(viewResolver);
 
     }
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder){
+        return builder
+                .setConnectTimeout(Duration.ofMillis(300000))
+                .setReadTimeout(Duration.ofMillis(300000))
+                .build();
+
+    }
+
+
 
 }

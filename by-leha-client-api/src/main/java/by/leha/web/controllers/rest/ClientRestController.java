@@ -1,9 +1,9 @@
 package by.leha.web.controllers.rest;
 
-import by.leha.dto.ClientDto;
-import by.leha.entity.Client;
-import by.leha.services.ClientService;
-import by.leha.web.mappers.ClientMapper;
+import by.leha.dto.client.ClientDto;
+import by.leha.entity.client.Client;
+import by.leha.services.client.ClientService;
+import by.leha.web.mappers.ClientDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -15,11 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api1/clients")
 public class ClientRestController {
-    private final ClientMapper mapper;
+    private final ClientDtoMapper mapper;
     private final ClientService clientService;
 
 
-    public ClientRestController(@Autowired @Qualifier("clientMapper") ClientMapper mapper, @Autowired @Qualifier("clientServiceImpl") ClientService clientService) {
+    public ClientRestController(@Autowired @Qualifier("clientDtoMapper") ClientDtoMapper mapper, @Autowired @Qualifier("clientServiceImpl") ClientService clientService) {
         this.mapper = mapper;
         this.clientService = clientService;
     }
@@ -32,13 +32,13 @@ public class ClientRestController {
 
 
     @PostMapping("")
-    public ResponseEntity createClient(@RequestBody ClientDto clientDto) {
+    public ResponseEntity<Client> createClient(@RequestBody ClientDto clientDto) {
         Client client = mapper.reverseMap(clientDto);
         boolean isAdded = clientService.addClient(client);
         if (isAdded)
             return new ResponseEntity<Client>(client, HttpStatus.CREATED);
         else {
-            return new ResponseEntity<Exception>(new Exception("didnt created"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Client>( HttpStatus.BAD_REQUEST);
         }
 
 
@@ -48,6 +48,14 @@ public class ClientRestController {
     public ResponseEntity<Client> getClientById(@PathVariable Long id) {
 
         var client = clientService.getClientById(id);
+
+        if (client == null){
+
+            return new ResponseEntity<Client>( HttpStatus.NOT_FOUND);
+
+        }
+
+
         return new ResponseEntity<Client>(client, HttpStatus.CREATED);
 
     }

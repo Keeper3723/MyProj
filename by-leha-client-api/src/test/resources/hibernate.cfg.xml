@@ -17,7 +17,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
 
-        <mapping class="by.leha.entity.Client"/>
+        <mapping class="by.leha.entity.client.Client"/>
         <!-- DB schema will be updated if needed -->
     </session-factory>
 

@@ -1,9 +1,12 @@
 package by.leha.repositories.client;
 
-import by.leha.entity.Client;
+import by.leha.entity.client.Client;
+import by.leha.entity.login.Login;
+import by.leha.services.login.LoginService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,52 +15,74 @@ import org.springframework.stereotype.Repository;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-@AllArgsConstructor(onConstructor_ = @Autowired)
-@NoArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 @Slf4j
 public class ClientRepositoryImpl implements  ClientRepository {
-    //todo настроить hibernate config, создать бд, доделать энтити, создать базовые rest, crud операции
+    //todo прописать правильные транзакции в методах
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+    private final LoginService loginService;
 
     @Override
-    @Transactional
+
     public List<Client> findAllClients() {
-        var session = sessionFactory.openSession();
+        var entityManager = sessionFactory.createEntityManager();
 
+        try {
+            entityManager.getTransaction().begin();
 
-        var clients =  session.createQuery("""
-from  Client
+            var clients = entityManager.createQuery("""
+
+                    from  Client
 """, Client.class).getResultList();
 
+        entityManager.getTransaction().commit();
         log.info("all clients was found");
         return clients;
-
+      }catch (Exception e){
+            entityManager.getTransaction().rollback();
+            log.error("Exception {0}",e);
+            return null;
+        }
 
 
     }
 
 
 
+    @Override
 
     public Client findClientById(Long id){
-        var session =sessionFactory.openSession();
-        return session.createQuery("""
-from Client c where  c.id = :id
+        var entityManager = sessionFactory.getCurrentSession();
+        entityManager.getTransaction().begin();
+        try{
+           var client = entityManager.createQuery("""
+                   from Client as c   where  c.id = :id
 """, Client.class).setParameter("id", id).getSingleResult();
+
+entityManager.getTransaction().commit();
+
+return client;
+        } catch (Exception e ){
+
+            entityManager.getTransaction().rollback();
+            return null;
+        }
+
+
+
 
     }
 
 
     @Override
-    @Transactional
+
     public boolean updateClientById(Long id, Client client){
-        var session = sessionFactory.openSession();
-        session.beginTransaction();
-        boolean isUpdated = session.createQuery("""
+        var entityManager = sessionFactory.createEntityManager();
+
+        boolean isUpdated = entityManager.createQuery("""
 update Client   set birthDate=  :birth_date,
 fullName = :full_name,
 email = :email,
@@ -73,35 +98,64 @@ sex = :sex
                 .setParameter("phone_number", client.getPhoneNumber())
                 .setParameter("sex", client.getSex())
                 .setParameter("id", id)
-
         .executeUpdate()>0;
 
 
-        session.getTransaction().commit();
+
         return isUpdated;
 
 
     }
     @Override
-    @Transactional
+
     public boolean deleteClientById(Long id){
-        var session =  sessionFactory.openSession();
-        session.beginTransaction();
-       boolean idClientChancged  = session.createQuery("""
+        var entityManager =  sessionFactory.createEntityManager();
+
+       boolean idClientChancged  = entityManager.createQuery("""
 delete Client  where id = :id
 """).setParameter("id", id).executeUpdate()>0;
-        session.getTransaction().commit();
+
         return idClientChancged;
     }
 
     @Override
-    public boolean insertClient(Client client){
-        var session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.persist("Client",client);
+    @Transactional
+    public boolean addLoginToClient(Long login_id, Client client) {
+        var entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+            var login = loginService.getById(login_id);
 
-        session.getTransaction().commit();
+            client.setLogin(login);
+            entityManager.merge(client);
+            entityManager.getTransaction().commit();
+            return true;
+        }catch (Exception e){
+
+            entityManager.getTransaction().rollback();
+            return false;
+
+        }
+
+
+
+    }
+
+    @Override
+
+    public boolean insertClient(Client client){
+        var entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+            entityManager.persist(client);
+            entityManager.getTransaction().commit();
         return true;
+        } catch (Exception e){
+            entityManager.getTransaction().rollback();
+            return false;
+        }
+
+
     }
 
 }

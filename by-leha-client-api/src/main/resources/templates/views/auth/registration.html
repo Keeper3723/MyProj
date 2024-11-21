@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="ru" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Регистрация</h2>
+    <form th:method="POST" th:action="@{/auth/registration}" >
+        <div class="form-group">
+            <label for="username">Логин</label>
+            <input type="text" id="username" th:field="*{login.username}" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" th:field="*{login.password}" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">Подтверждение пароля</label>
+            <input type="password" id="confirm_password"  name="confirm_password" required>
+        </div>
+        <div class="form-group">
+            <label for="fullname">ФИО</label>
+            <input type="text" id="fullname" th:field="*{client.fullName}" name="fullname" required>
+        </div>
+        <div class="form-group">
+            <label for="dob">Дата рождения</label>
+            <input type="date" id="dob" th:field="*{client.birthDate}" name="dob" required>
+        </div>
+        <div class="form-group">
+            <label for="gender">Пол</label>
+            <select id="gender" th:field="*{client.sex}" name="gender" required>
+                <option value="" disabled selected>Выберите пол</option>
+                <option value="MALE">Мужской</option>
+                <option value="FEMALE">Женский</option>
+                <option value="OTHER">Другой</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{client.email}" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="passport_series">Серия паспорта</label>
+            <input type="text" id="passport_series" th:field="*{client.passportSerialNumber}" name="passport_series" required pattern="\d{4}" maxlength="4" placeholder="XXXX">
+        </div>
+        <div class="form-group">
+            <label for="passport_number">Номер паспорта</label>
+            <input type="text" id="passport_number" th:field="*{client.phoneNumber}" name="passport_number" required pattern="\d{6}" maxlength="6" placeholder="XXXXXX">
+        </div>
+
+
+        <button type="submit"  class="btn">Зарегистрироваться</button>
+        <p></p>
+    </form>
+
+
+    <form action="login">
+        <button   class="btn">Уже зарегистрированы?</button>
+    </form>
+
+
+<!--    <script>-->
+<!--        document.getElementById("submitButton").addEventListener("click", function () {-->
+
+<!--            document.getElementById("form1").submit();-->
+<!--            document.getElementById("form2").submit();-->
+<!--        });-->
+<!--    </script>-->
+</div>
+
+
+
+
+</body>
+</html>
