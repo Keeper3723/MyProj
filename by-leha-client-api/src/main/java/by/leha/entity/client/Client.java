@@ -36,6 +36,8 @@ public class Client {
     private String email;
     @JoinColumn(name = "login_id",referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Login login;
 
 

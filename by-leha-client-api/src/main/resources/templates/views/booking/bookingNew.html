@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование номера в отеле</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        .hotel-type {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #fff;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
+
+<h1>Бронирование номера в отеле</h1>
+
+<div class="form-container">
+    <h2>Выберите тип отеля</h2>
+
+    <div class="hotel-type">
+        <h3>Эконом</h3>
+        <p>Простой и удобный номер по доступной цене.</p>
+        <p><strong>Цена:</strong> 2000 руб./ночь</p>
+        <input type="radio" id="economy" name="hotel" value="economy">
+        <label for="economy">Выбрать Эконом</label>
+    </div>
+
+    <div class="hotel-type">
+        <h3>Стандарт</h3>
+        <p>Комфортабельный номер с необходимыми удобствами.</p>
+        <p><strong>Цена:</strong> 4000 руб./ночь</p>
+        <input type="radio" id="standard" name="hotel" value="standard">
+        <label for="standard">Выбрать Стандарт</label>
+    </div>
+
+    <div class="hotel-type">
+        <h3>Люкс</h3>
+        <p>Роскошный номер с дополнительными услугами.</p>
+        <p><strong>Цена:</strong> 8000 руб./ночь</p>
+        <input type="radio" id="luxury" name="hotel" value="luxury">
+        <label for="luxury">Выбрать Люкс</label>
+    </div>
+
+    <button type="submit">Забронировать номер</button>
+</div>
 
 </body>
 </html>

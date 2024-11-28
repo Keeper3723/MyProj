@@ -4,12 +4,9 @@ import by.leha.entity.login.Login;
 
 import by.leha.entity.role.Role;
 import by.leha.services.roles.RoleService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 
@@ -20,6 +17,7 @@ import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public  class LoginRepositoryImpl implements LoginRepository {
 
     private final SessionFactory sessionFactory;
@@ -34,7 +32,8 @@ public  class LoginRepositoryImpl implements LoginRepository {
         session.beginTransaction();
 
         try {
-            var logins = session.createQuery("from Login", Login.class).list();
+            var logins = session.createQuery(""" 
+FROM Login""", Login.class).list();
             session.getTransaction().commit();
 
             return Optional.of( logins);
@@ -64,21 +63,26 @@ public  class LoginRepositoryImpl implements LoginRepository {
     @Override
     public Optional<Login> findByUsername(String username) {
 
-        var entityManager = sessionFactory.createEntityManager();
-        entityManager.getTransaction().begin();
+        var session = sessionFactory.createEntityManager();
+        session.getTransaction().begin();
         try{
+            var client =  session.createQuery("""
+from  Login where username = :username
+""", Login.class)
+                    .setParameter("username", username)
+                            .getSingleResult();
+            session.getTransaction().commit();
 
-            var client =  entityManager.createQuery("""
-select  Login  where  Login.username = :username
-""", Login.class).setParameter("username", username).getSingleResult();
-            entityManager.getTransaction().commit();
+            log.info("user %s was found".formatted(client.getUsername()));
             return Optional.of( client);
-
 
         }catch (Exception e){
 
-            entityManager.getTransaction().rollback();
+            session.getTransaction().rollback();
+            log.warn("user %s could not be found".formatted(username));
             return Optional.empty();
+        }finally {
+            session.close();
         }
 
 

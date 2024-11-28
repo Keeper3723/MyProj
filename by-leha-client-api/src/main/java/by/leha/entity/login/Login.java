@@ -30,12 +30,13 @@ public class Login implements Serializable , UserDetails {
     private String username;
     @Column(name = "password")
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "logins_roles",
             joinColumns = {@JoinColumn(name = "login_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
+
     private Set<Role> roles;
 
 

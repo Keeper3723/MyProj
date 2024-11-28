@@ -26,17 +26,17 @@ public class ClientRestController {
 
 
     @GetMapping("")
-    public List<Client> getAllClient() {
-        return clientService.getAllClients();
+    public List<ClientDto> getAllClient() {
+        return clientService.getAllClients().stream().map(mapper::map).toList();
     }
 
 
     @PostMapping("")
-    public ResponseEntity<Client> createClient(@RequestBody ClientDto clientDto) {
+    public ResponseEntity<?>createClient(@RequestBody ClientDto clientDto) {
         Client client = mapper.reverseMap(clientDto);
         boolean isAdded = clientService.addClient(client);
         if (isAdded)
-            return new ResponseEntity<Client>(client, HttpStatus.CREATED);
+            return new ResponseEntity<ClientDto>(mapper.map(client), HttpStatus.CREATED);
         else {
             return new ResponseEntity<Client>( HttpStatus.BAD_REQUEST);
         }

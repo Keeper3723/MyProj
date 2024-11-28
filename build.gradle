@@ -58,6 +58,7 @@ subprojects {
         implementation 'org.thymeleaf:thymeleaf-spring6'
 
         //hibernate
+        implementation 'org.springframework.data:spring-data-jpa'
 
 
         implementation platform ("org.hibernate.orm:hibernate-platform:6.6.1.Final")

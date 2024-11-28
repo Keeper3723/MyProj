@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование номеров в отеле</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Добро пожаловать в наш отель!</h1>
+    <nav>
+        <ul>
+            <li><a href="#about">О нас</a></li>
+            <li><a href="/bo">Номера</a></li>
+            <li><a href="#booking">Бронирование</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="about">
+    <h2>О нашем отеле</h2>
+    <p>Наш отель предлагает комфортные номера и высокий уровень обслуживания. Мы находимся в центре города, рядом с основными достопримечательностями.</p>
+</section>
+
+<section id="rooms">
+    <h2>Номера</h2>
+    <p>У нас есть различные типы номеров на любой вкус и бюджет. Все номера оборудованы современными удобствами.</p>
+</section>
+
+<section id="booking">
+    <h2>Бронирование</h2>
+    <p>Для бронирования номера, пожалуйста, свяжитесь с нами по телефону или электронной почте, или перейдите по соответствующей вкладке</p>
+</section>
+
+<footer id="contact">
+    <h2>Контакты</h2>
+    <p>Email: info@hotel.com</p>
+    <p>Телефон: +7 (123) 456-78-90</p>
+</footer>
+
+<script>
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

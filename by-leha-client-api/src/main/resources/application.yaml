@@ -23,15 +23,15 @@ logging:
 
 rest:
   client:
-    url: http://localhost:8080/api1/clientst
+    url: http://localhost:8080/api1/clients
   login:
-    url: http://localhost:8080/api1/loginst
+    url: http://localhost:8080/api1/logins
 
 
 security:
   jwt:
     secret: ZGZibmpuZmo7IG52ZjtkdidtZHNvaXZrbGV1aGhnZWdpaHVqZidvJ2ZvZidrZnZkdm5uenZjY3h6dnlydXdlbEhYVkM=
-    audiance: 360000
+    audiance: 3600000
     refresh: 2592000000
 
 
