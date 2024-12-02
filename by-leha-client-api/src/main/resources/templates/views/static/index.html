@@ -50,8 +50,25 @@
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #007bff;
+            background-color: #0062d2;
             color: white;
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff; /* Цвет кнопки */
+            border: none; /* Убираем рамку */
+            border-radius: 5px; /* Скругление углов */
+            text-align: center; /* Выравнивание текста */
+            cursor: pointer; /* Курсор при наведении */
+            transition: background-color 0.3s ease; /* Плавный переход цвета */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Цвет кнопки при наведении */
         }
     </style>
 </head>
@@ -60,14 +77,15 @@
     <h1>Добро пожаловать в наш отель!</h1>
     <nav>
         <ul>
-            <li><a href="#about">О нас</a></li>
-            <li><a href="/bo">Номера</a></li>
-            <li><a href="#booking">Бронирование</a></li>
-            <li><a href="#contact">Контакты</a></li>
+            <li><a onclick="enterAboutUs()">О нас</a></li>
+            <li><a onclick="enterRooms()">Номера</a></li>
+            <li><a onclick="enterBooking()">Бронирование</a></li>
         </ul>
     </nav>
 </header>
-
+<p></p>
+<button onclick="goToPersonalAccount()">Перейти в личный кабинет</button>
+<p></p>
 <section id="about">
     <h2>О нашем отеле</h2>
     <p>Наш отель предлагает комфортные номера и высокий уровень обслуживания. Мы находимся в центре города, рядом с основными достопримечательностями.</p>
@@ -80,13 +98,15 @@
 
 <section id="booking">
     <h2>Бронирование</h2>
-    <p>Для бронирования номера, пожалуйста, свяжитесь с нами по телефону или электронной почте, или перейдите по соответствующей вкладке</p>
+    <p>Для бронирования номера, пожалуйста, свяжитесь с нами по телефону или электронной почте, или перейдите по соответствующей вкладке.</p>
+
+    <!-- Кнопка для перехода в личный кабинет -->
 </section>
 
 <footer id="contact">
-    <h2>Контакты</h2>
-    <p>Email: info@hotel.com</p>
-    <p>Телефон: +7 (123) 456-78-90</p>
+    <h2>Спонсоры</h2>
+    <p>их нет :(</p>
+    <p>а жаль</p>
 </footer>
 
 <script>
@@ -99,6 +119,23 @@
             });
         });
     });
+
+    function enterAboutUs(){
+        window.location.href="/about-us";
+    }
+
+    function enterRooms(){
+        window.location.href="/rooms";
+    }
+
+    function enterBooking(){
+        window.location.href="/booking/new";
+    }
+
+    // Функция для перехода в личный кабинет
+    function goToPersonalAccount() {
+        window.location.href = "/personal-account"; // Замените на нужный URL
+    }
 </script>
 
 </body>

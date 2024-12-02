@@ -1,34 +1,26 @@
 package by.leha.web.controllers;
 
-import by.leha.entity.hotel.enums.RoomStatus;
-import by.leha.web.dto.booking.BookingDto;
 import by.leha.web.security.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
-@Controller("/booking")
+@Controller
 @RequiredArgsConstructor
+@RequestMapping("/booking")
 public class BookingController {
 
     private final JwtTokenUtils jwtTokenUtils;
+    private final AuthenticationManager authenticationManager;
 
     @GetMapping("/new")
     public String booking() {
 
 return "booking/bookingNew";
 }
-@GetMapping("/new/confirm")
-public String bookingConfirm(@RequestParam RoomStatus roomStatus,
-            @RequestHeader("Authorization") String token
-) {
 
-    return "booking/bookingConfirm";
-}
 
 
 }

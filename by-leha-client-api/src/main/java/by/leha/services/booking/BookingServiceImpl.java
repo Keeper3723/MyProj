@@ -1,11 +1,19 @@
 package by.leha.services.booking;
 
 import by.leha.entity.booking.Booking;
+import by.leha.repositories.booking.BookingRepository;
+import by.leha.services.room.RoomService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Component
+@Service
+@RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
+    private final RoomService roomService;
+    private  final BookingRepository bookingRepository;
     @Override
     public List<Booking> getAll() {
         return List.of();
@@ -29,8 +37,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public boolean insert(Booking booking) {
-        return false;
+    @Transactional
+    public boolean createBooking(Booking booking) {
+return false;
     }
 
 }

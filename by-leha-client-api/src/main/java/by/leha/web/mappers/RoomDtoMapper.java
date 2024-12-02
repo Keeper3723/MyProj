@@ -1,8 +1,8 @@
 package by.leha.web.mappers;
 
-import by.leha.entity.hotel.Room;
-import by.leha.entity.hotel.enums.RoomClass;
-import by.leha.entity.hotel.enums.RoomStatus;
+import by.leha.entity.room.Room;
+import by.leha.entity.room.enums.RoomClass;
+import by.leha.entity.room.enums.RoomStatus;
 import by.leha.mappers.Mapper;
 import by.leha.web.dto.room.RoomDto;
 import org.springframework.stereotype.Component;

@@ -31,7 +31,7 @@ rest:
 security:
   jwt:
     secret: ZGZibmpuZmo7IG52ZjtkdidtZHNvaXZrbGV1aGhnZWdpaHVqZidvJ2ZvZidrZnZkdm5uenZjY3h6dnlydXdlbEhYVkM=
-    audiance: 3600000
+    audiance: 36000000
     refresh: 2592000000
 
 

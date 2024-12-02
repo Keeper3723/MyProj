@@ -53,7 +53,7 @@
 
 <div class="container">
     <h2>Вход</h2>
-    <form th:action="@{/auth/login}" th:method="POST">
+    <form th:method="GET" th:action="@{/about-us}" id="login-form">
         <div class="form-group">
             <label   for="name">Login</label>
             <input type="text" th:field="*{login.username}" id="name" name="name" required>
@@ -62,8 +62,61 @@
             <label for="password">Password</label>
             <input type="password" th:field="*{login.password}" id="password" name="password" required>
         </div>
-        <button type="submit" class="btn">Войти</button>
+        <button type="submit"   class="btn">Войти</button>
         <p></p>
+
+        <script>
+
+        /*    function authenticateUser(username, password) {
+                $.fetch({
+                    url: '/api1/auth/authenticate', // URL вашего контроллера аутентификации
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        name: username,
+                        password: password,
+                        jwtToken:''
+                    }),
+                    success: function(response) {
+                        // Успешный ответ, сохраняем JWT токен
+                        const jwtToken = response.jwtToken
+
+                        localStorage.setItem('Authorization', "Bearer "+jwtToken); // Сохраняем токен в localStorage
+                        console.log('Токен получен:', jwtToken);
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Обработка ошибок
+                        console.error('Ошибка аутентификации:', textStatus, errorThrown);
+                    }
+                });
+            }
+            */
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {    e.preventDefault();
+            const username = document.getElementById('name').value;
+            const password = document.getElementById('password').value;
+
+            try {        const response = await fetch(`/api1/auth/authenticate`, {
+                method: 'POST',            headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })        });
+                if (!response.ok) throw new Error('Ошибка авторизации');
+                const data = await response.json();
+                window.localStorage.setItem("Authorization", `Bearer ${data.token}`)
+                window.location.href = "/about-us"
+
+
+
+
+
+                alert('Авторизация успешна!');
+            } catch (err) {        alert(err.message);
+            }
+        });
+
+
+        </script>
+
 
 
     </form>

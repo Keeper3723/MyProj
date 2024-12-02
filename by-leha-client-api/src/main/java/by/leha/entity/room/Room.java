@@ -1,8 +1,8 @@
-package by.leha.entity.hotel;
+package by.leha.entity.room;
 
 
-import by.leha.entity.hotel.enums.RoomClass;
-import by.leha.entity.hotel.enums.RoomStatus;
+import by.leha.entity.room.enums.RoomClass;
+import by.leha.entity.room.enums.RoomStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +28,7 @@ public class Room {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "room_status")
     private RoomStatus status;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "room_class")
     private RoomClass roomClass;
 }

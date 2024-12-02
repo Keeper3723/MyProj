@@ -5,8 +5,10 @@ import by.leha.services.login.LoginService;
 import by.leha.web.security.JwtResponse;
 import by.leha.web.security.JwtRequest;
 import by.leha.web.security.JwtTokenUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,9 +43,10 @@ public class AuthController {
         }
         UserDetails userDetails = loginService.loadUserByUsername(authReq.username());
         String token = jwtUtils.generateToken(userDetails);
-        var response = new ResponseEntity<JwtResponse>(new JwtResponse(token), HttpStatus.OK);
-        response.getHeaders().set("Authorization","Bearer "+token);
-        return response;
+        var header = new HttpHeaders();
+        header.set("Authorization", "Bearer "+ token);
+
+        return new ResponseEntity<JwtResponse>(new JwtResponse(token), header, HttpStatus.OK);
 
 
     }

@@ -2,8 +2,8 @@ package by.leha.entity.booking;
 
 
 import by.leha.entity.booking.enums.BookingStatus;
-import by.leha.entity.hotel.Room;
-import by.leha.entity.hotel.enums.RoomStatus;
+import by.leha.entity.client.Client;
+import by.leha.entity.room.Room;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,6 +39,11 @@ public class Booking {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private BookingStatus status;
+    @JoinColumn(name ="client_id", referencedColumnName = "id")
+    @ManyToOne
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Client client_id;
 
 
 

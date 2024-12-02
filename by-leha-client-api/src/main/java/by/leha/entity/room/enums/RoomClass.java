@@ -1,5 +1,6 @@
-package by.leha.entity.hotel.enums;
+package by.leha.entity.room.enums;
 
 public enum RoomClass {
     BUDGET, MIDDLE, LUX
+
 }

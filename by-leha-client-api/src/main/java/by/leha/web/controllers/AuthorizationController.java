@@ -1,16 +1,15 @@
 package by.leha.web.controllers;
 
 import by.leha.dto.client.ClientDto;
-import by.leha.repositories.roles.RoleRepository;
+
 import by.leha.services.client.ClientService;
 import by.leha.dto.login.LoginDto;
 import by.leha.services.login.LoginService;
-import by.leha.web.controllers.rest.AuthController;
+
 import by.leha.web.dto.client.ClientCreateDto;
 import by.leha.web.mappers.ClientCreateDtoMapper;
 import by.leha.web.mappers.LoginMapper;
-import by.leha.web.security.JwtRequest;
-import by.leha.web.security.JwtResponse;
+
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +17,15 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.http.HttpRequest;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,7 +34,6 @@ public class AuthorizationController {
 
 
 private final ClientService clientService;
-private final RoleRepository roleRepository;
 private final ClientCreateDtoMapper clientCreateMapper;
 private final LoginMapper loginMapper;
 private final Environment environment;
@@ -98,6 +98,10 @@ clientService.addLoginToClient(client,login.getId());
     return "hotel/hotels";
 }
 
+@GetMapping("/access-denied")
+    public String accessDenied(){
+        return"auth/LowPrivilage";
+}
 
 
 

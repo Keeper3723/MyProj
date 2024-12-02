@@ -6,20 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/rooms")
 @RequiredArgsConstructor
-@RequestMapping("/about-us")
-public class AboutUsController {
-
-
-
-
+public class RoomController {
     @GetMapping("")
-    public String aboutUs() {
+    public String roomsDesc() {
 
-
-        return "about-us/showcase";
+        return "hotel/hotels";
     }
-
 
 
 }

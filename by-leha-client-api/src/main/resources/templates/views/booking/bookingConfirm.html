@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Выбор дат бронирования</title>
+    <title>Всплывающее окно подтверждения</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,101 +11,104 @@
             padding: 20px;
             background-color: #f4f4f4;
         }
-        h1 {
-            text-align: center;
+
+        /* Стиль для модального фона */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed; /* Открывается поверх страницы */
+            z-index: 1000; /* Слой поверх остальных элементов */
+            left: 0;
+            top: 0;
+            width: 100%; /* Полная ширина */
+            height: 100%; /* Полная высота */
+            overflow: auto; /* Прокрутка при необходимости */
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
         }
-        .form-container {
-            max-width: 600px;
-            margin: auto;
+
+        /* Стиль для содержимого модального окна */
+        .modal-content {
             background-color: #fff;
+            margin: 15% auto; /* Центрирование по вертикали */
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #888;
+            width: 300px; /* Ширина модального окна */
+            border-radius: 5px; /* Скругление углов */
         }
-        label {
-            display: block;
-            margin: 10px 0 5px;
+
+        .close {
+            color: #aaa;
+            float: right; /* Кнопка закрытия справа */
+            font-size: 28px;
+            font-weight: bold;
         }
-        input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer; /* Указатель при наведении */
         }
+
         button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .rooms-container {
-            max-width: 600px;
-            margin: auto;
-            margin-top: 20px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .room {
-            margin-bottom: 15px;
-        }
-        .room h3 {
-            margin: 0;
-        }
-        .room p {
-            margin-top: 5px;
+            padding: 10px 15px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-<h1>Выбор дат бронирования</h1>
+<h2>Пример всплывающего окна подтверждения</h2>
 
-<div class="form-container">
-    <h2>Укажите даты бронирования</h2>
+<!-- Кнопка для открытия модального окна -->
+<button id="openModal">Удалить элемент</button>
 
-    <form action="confirmation.html" method="post">
-        <label for="start-date">Дата начала:</label>
-        <input type="date" id="start-date" name="start-date" required>
-
-        <label for="end-date">Дата окончания:</label>
-        <input type="date" id="end-date" name="end-date" required>
-
-        <button type="submit">Подтвердить бронирование</button>
-    </form>
-</div>
-
-<div class="rooms-container">
-    <h2>Доступные комнаты</h2>
-
-    <div class="room">
-        <h3>Стандартный номер</h3>
-        <p>Описание: Уютный номер с одной двуспальной кроватью, ванной и бесплатным Wi-Fi.</p>
-    </div>
-
-    <div class="room">
-        <h3>Люкс</h3>
-        <p>Описание: Просторный номер с двумя спальнями, гостиной и мини-баром.</p>
-    </div>
-
-    <div class="room">
-        <h3>Семейный номер</h3>
-        <p>Описание: Номер для семьи с детьми, включает в себя две кровати и игровую зону.</p>
-    </div>
-
-    <div class="room">
-        <h3>Номер для молодоженов</h3>
-        <p>Описание: Романтический номер с джакузи и красивым видом на город.</p>
+<!-- Модальное окно -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Подтверждение действия</h3>
+        <p>Вы уверены, что хотите удалить этот элемент?</p>
+        <button id="confirmBtn">Подтвердить</button>
+        <button id="cancelBtn">Отмена</button>
     </div>
 </div>
+
+<script>
+    // Получаем элементы
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("openModal");
+    var span = document.getElementsByClassName("close")[0];
+    var confirmBtn = document.getElementById("confirmBtn");
+    var cancelBtn = document.getElementById("cancelBtn");
+
+    // Открытие модального окна при нажатии на кнопку
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Закрытие модального окна при нажатии на крестик
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Закрытие модального окна при нажатии на кнопку "Отмена"
+    cancelBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Логика при подтверждении действия
+    confirmBtn.onclick = function() {
+        alert("Элемент удален!"); // Здесь можно добавить логику удаления
+        modal.style.display = "none"; // Закрытие модального окна
+    }
+
+    // Закрытие модального окна при клике вне его
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 
 </body>
 </html>

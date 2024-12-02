@@ -104,9 +104,9 @@
     </form>
 
 
-    <form action="login">
-        <button   class="btn">Уже зарегистрированы?</button>
-    </form>
+
+        <button id="exit_button" onclick="check()"   class="btn">Уже зарегистрированы?</button>
+
 
 
 <!--    <script>-->
@@ -119,9 +119,10 @@
 </div>
 
 <script>
-   var xhr = new XMLHttpRequest();
-
-   xhr.open('GET', )
+   function check(){
+       if (localStorage.getItem("Authorization")!= null){
+       alert(localStorage.getItem("Authorization"))}
+   else {alert("NO AUTH")}}
 
 </script>
 

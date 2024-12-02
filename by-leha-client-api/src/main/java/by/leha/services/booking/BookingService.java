@@ -11,7 +11,8 @@ public interface BookingService {
     Booking getByID(Long id);
     boolean update(Long id, Booking booking);
     boolean delete(Long id);
-    boolean insert(Booking booking);
+    boolean createBooking(Booking booking);
+
 
 
 

@@ -1,15 +1,8 @@
 package by.leha.web.dto.room;
 
-import by.leha.entity.hotel.enums.RoomClass;
-import by.leha.entity.hotel.enums.RoomStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import by.leha.entity.room.enums.RoomClass;
+import by.leha.entity.room.enums.RoomStatus;
 import lombok.*;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
 @Data
 @AllArgsConstructor

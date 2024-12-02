@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет пользователя</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    section {
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #28a745; /* Цвет кнопки */
+      border: none; /* Убираем рамку */
+      border-radius: 5px; /* Скругление углов */
+      text-align: center; /* Выравнивание текста */
+      cursor: pointer; /* Курсор при наведении */
+      transition: background-color 0.3s ease; /* Плавный переход цвета */
+    }
+
+    .button:hover {
+      background-color: #218838; /* Цвет кнопки при наведении */
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Личный кабинет пользователя</h1>
+</header>
+
+<section id="user-info">
+  <h2>Личные данные</h2>
+  <p><strong>Имя:</strong> Иван Иванов</p>
+  <p><strong>Email:</strong> ivan.ivanov@example.com</p>
+  <p><strong>Телефон:</strong> +7 (123) 456-78-90</p>
+</section>
+
+<section id="bookings">
+  <h2>Забронированные номера</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Номер</th>
+      <th>Дата заезда</th>
+      <th>Дата выезда</th>
+      <th>Статус бронирования</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Стандартный номер</td>
+      <td>15 декабря 2024</td>
+      <td>20 декабря 2024</td>
+      <td>Подтверждено</td>
+      <td><button class="button">Отменить бронирование</button></td>
+    </tr>
+    <tr>
+      <td>Люкс</td>
+      <td>22 декабря 2024</td>
+      <td>28 декабря 2024</td>
+      <td>Ожидает подтверждения</td>
+      <td><button class="button">Отменить бронирование</button></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Дополнительные действия -->
+  <div style="margin-top: 20px;">
+    <button class="button" onclick="window.location.href='/make-new-booking'">Забронировать новый номер</button>
+  </div>
+
+</section>
+
+</body>
+</html>

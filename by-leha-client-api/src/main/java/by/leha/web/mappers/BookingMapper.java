@@ -2,11 +2,16 @@ package by.leha.web.mappers;
 
 import by.leha.entity.booking.Booking;
 import by.leha.mappers.Mapper;
+import by.leha.services.client.ClientService;
 import by.leha.web.dto.booking.BookingDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class BookingMapper implements Mapper<Booking, BookingDto> {
+    private final ClientService clientService;
+
     @Override
     public BookingDto map(Booking booking) {
         return BookingDto.builder()
@@ -16,6 +21,7 @@ public class BookingMapper implements Mapper<Booking, BookingDto> {
                 .date_in(booking.getDate_in())
                 .date_out(booking.getDate_out())
                 .status( booking.getStatus())
+                .client_id(booking.getClient_id().getId())
                 .build();
     }
 

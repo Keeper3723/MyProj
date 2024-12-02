@@ -2,9 +2,8 @@ package by.leha.repositories.client;
 
 import by.leha.entity.client.Client;
 import by.leha.entity.login.Login;
+import by.leha.exceptions.ResourceNotFoundException;
 import by.leha.services.login.LoginService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +14,13 @@ import org.springframework.stereotype.Repository;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 @Slf4j
 public class ClientRepositoryImpl implements  ClientRepository {
-    //todo прописать правильные транзакции в методах
+
 
     private final SessionFactory sessionFactory;
     private final LoginService loginService;
@@ -138,6 +138,30 @@ delete Client  where id = :id
         }
 
 
+
+    }
+
+    @Override
+    public Optional<Client> getClientByLogin(Login login) {
+        var entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+            var client = entityManager.createQuery(
+                    """
+    from Client where login = :login
+""",
+                    Client.class
+
+            ).setParameter("login",login).getSingleResult();
+
+            entityManager.getTransaction().commit();
+                return Optional.of(client);
+        } catch (Exception e){
+            entityManager.getTransaction().rollback();
+            log.warn("Client by login %s not found".formatted(login));
+            return Optional.empty();
+
+        }
 
     }
 

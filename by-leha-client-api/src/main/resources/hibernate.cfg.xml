@@ -20,6 +20,8 @@
         <mapping class="by.leha.entity.client.Client"/>
         <mapping class="by.leha.entity.login.Login"/>
         <mapping class="by.leha.entity.role.Role"/>
+        <mapping class="by.leha.entity.booking.Booking"/>
+        <mapping class="by.leha.entity.room.Room"/>
         <!-- DB schema will be updated if needed -->
     </session-factory>
 

@@ -1,6 +1,7 @@
 package by.leha.web.controllers.rest;
 
-import by.leha.entity.hotel.Room;
+import by.leha.entity.room.Room;
+import by.leha.entity.room.enums.RoomClass;
 import by.leha.services.room.RoomService;
 import by.leha.web.dto.room.RoomDto;
 import by.leha.web.mappers.RoomDtoMapper;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping("api1/rooms")
 @RequiredArgsConstructor
 public class RoomRestController {
     private final RoomService roomService;
@@ -22,10 +23,15 @@ public class RoomRestController {
     public ResponseEntity<List<?>> getAllRooms() {
         return   ResponseEntity.ok( roomService.getAll());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable Long id){
     return  ResponseEntity.ok(roomService.getById(id));
+    }
 
+    @GetMapping("/open")
+    public ResponseEntity<List<?>> isOpen(){
+        return ResponseEntity.ok( roomService.getNotBookedRooms());
     }
 
     @PostMapping
@@ -35,7 +41,7 @@ return ResponseEntity.ok(roomService.create( mapper.map(roomDto))? "Room created
 
     @PutMapping("/{id}")
     public ResponseEntity<String> uodateRoom(@RequestBody RoomDto roomDto, @PathVariable Long id){
-       return ResponseEntity.ok(  roomService.update(mapper.map(roomDto))? "Room was updated": "Room wasn't updated");
+       return ResponseEntity.ok(  roomService.update(id,mapper.map(roomDto))? "Room was updated": "Room wasn't updated");
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String>deleteRoom(@PathVariable Long id){

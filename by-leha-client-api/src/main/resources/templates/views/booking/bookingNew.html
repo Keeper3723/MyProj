@@ -30,18 +30,46 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
             color: white;
+            background-color: #007bff;
             border: none;
             border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #218838;
+            background-color: #0056b3;
         }
+
+        /* Стиль для модального фона */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed; /* Открывается поверх страницы */
+            z-index: 1000; /* Слой поверх остальных элементов */
+            left: 0;
+            top: 0;
+            width: 100%; /* Полная ширина */
+            height: 100%; /* Полная высота */
+            overflow: auto; /* Прокрутка при необходимости */
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+        }
+
+        /* Стиль для содержимого модального окна */
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto; /* Центрирование по вертикали */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px; /* Ширина модального окна */
+            border-radius: 5px; /* Скругление углов */
+        }
+
+
     </style>
 </head>
 <body>
@@ -53,7 +81,6 @@
 
     <div class="hotel-type">
         <h3>Эконом</h3>
-        <p>Простой и удобный номер по доступной цене.</p>
         <p><strong>Цена:</strong> 2000 руб./ночь</p>
         <input type="radio" id="economy" name="hotel" value="economy">
         <label for="economy">Выбрать Эконом</label>
@@ -61,7 +88,6 @@
 
     <div class="hotel-type">
         <h3>Стандарт</h3>
-        <p>Комфортабельный номер с необходимыми удобствами.</p>
         <p><strong>Цена:</strong> 4000 руб./ночь</p>
         <input type="radio" id="standard" name="hotel" value="standard">
         <label for="standard">Выбрать Стандарт</label>
@@ -69,14 +95,85 @@
 
     <div class="hotel-type">
         <h3>Люкс</h3>
-        <p>Роскошный номер с дополнительными услугами.</p>
         <p><strong>Цена:</strong> 8000 руб./ночь</p>
         <input type="radio" id="luxury" name="hotel" value="luxury">
         <label for="luxury">Выбрать Люкс</label>
     </div>
 
-    <button type="submit">Забронировать номер</button>
+    <form id="bookingForm">
+        <label for="start-date">Дата начала:</label>
+        <input type="date" id="start-date" name="start-date" required>
+
+        <label for="end-date">Дата окончания:</label>
+        <input type="date" id="end-date" name="end-date" required>
+
+        <button type="button" id="bookButton">Забронировать номер</button>
+    </form>
 </div>
+
+<!-- Модальное окно -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <h3>Подтверждение бронирования</h3>
+        <p>Вы уверены, что хотите забронировать номер?</p>
+
+        <!-- Информация о бронировании -->
+        <p id="bookingDetails"></p>
+
+        <button id="confirmBooking">Подтвердить</button>
+    </div>
+</div>
+
+<script>
+    // Получаем элементы
+    var modal = document.getElementById("confirmationModal");
+    var bookButton = document.getElementById("bookButton");
+    var closeButtons = document.querySelectorAll(".close");
+
+    // Открытие модального окна при нажатии на кнопку бронирования
+    bookButton.onclick = function() {
+        var selectedHotel = document.querySelector('input[name="hotel"]:checked');
+
+        if (!selectedHotel) {
+            alert("Пожалуйста, выберите тип номера.");
+            return; // Если номер не выбран, выходим из функции
+        }
+
+        var startDate = document.getElementById("start-date").value;
+        var endDate = document.getElementById("end-date").value;
+
+        // Отображение информации о бронировании в модальном окне
+        document.getElementById("bookingDetails").innerText =
+            "Тип номера: " + selectedHotel.nextSibling.textContent + "\n" +
+            "Дата заезда: " + startDate + "\n" +
+            "Дата выезда: " + endDate;
+
+        modal.style.display = "block"; // Показываем модальное окно
+    }
+
+    // Закрытие модального окна
+    closeButtons.forEach(function(button) {
+        button.onclick = function() {
+            modal.style.display = "none";
+        }
+    });
+
+    // Логика при подтверждении бронирования
+    document.getElementById("confirmBooking").onclick = function() {
+        fetch()
+        modal.style.display = "none"; // Закрытие модального окна
+        document.getElementById("bookingForm").reset(); // Сброс формы после подтверждения
+    }
+
+    // Закрытие модального окна при клике вне его
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 
 </body>
 </html>

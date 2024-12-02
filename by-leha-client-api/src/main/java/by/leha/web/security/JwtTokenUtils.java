@@ -1,8 +1,11 @@
 package by.leha.web.security;
 
+import by.leha.services.client.ClientService;
+import by.leha.services.login.LoginService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +31,8 @@ public class JwtTokenUtils {
     private Duration audiance;
 
     private SecretKey secretKey;
-
+    private final ClientService clientService;
+    private final LoginService loginService;
 
 
     @PostConstruct
@@ -44,6 +48,7 @@ public String generateToken(UserDetails userDetails) {
             .map(GrantedAuthority::getAuthority)
             .toList();
     claims.put("roles", roleList);
+    claims.put("client_id",clientService.findClientByLogin(loginService.getByUserName(userDetails.getUsername())).getId());
 
     Date issueDate = new Date();
     Date expieredDate = new Date(issueDate.getTime() + audiance.toMillis());
@@ -72,6 +77,9 @@ public String generateToken(UserDetails userDetails) {
     public String getUsernameFromToken(String token) {
         return getClaimsFromToken(token).getSubject();
 
+    }
+    public String getClientIdFromToken(String token){
+        return getClaimsFromToken(token).get("client_id", String.class);
     }
     public List<String> getRolesFromToken(String token) {
         List<String> roleList = getClaimsFromToken(token).get("roles", List.class);
